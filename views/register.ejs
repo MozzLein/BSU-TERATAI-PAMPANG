@@ -1,0 +1,70 @@
+<%- include('layouts/header')-%>
+</head>
+
+<body class="bg-gradient-success">
+
+    <div class="container w-50">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Buat Akun!</h1>
+                            </div>
+                            <form class="user" action="/register" method="POST">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="first_name form-control form-control-user" id="exampleFirstName"
+                                        name="first_name"    
+                                        placeholder="First Name">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="last_name form-control form-control-user" id="exampleLastName"
+                                        name="last_name"    
+                                        placeholder="Last Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="email_address form-control form-control-user" id="exampleInputEmail"
+                                    name="email_address"    
+                                    placeholder="Email Address">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="password form-control form-control-user"
+                                        name="password"    
+                                        id="exampleInputPassword" placeholder="Password">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="password2 form-control form-control-user"
+                                        name="password2"    
+                                        id="exampleRepeatPassword" placeholder="Repeat Password">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Buat Akun
+                                </button>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="login">Sudah punya akun? Login!</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script>
+    const password1 = document.querySelector('.password');
+    const password2 = document.querySelector('.password2')
+
+    if(password1.value != password2.value){
+        alert('PASWORD TIDAK SAMA')
+    }
+</script>
+<%-include('layouts/etc') -%>
+</body>
+
+</html>

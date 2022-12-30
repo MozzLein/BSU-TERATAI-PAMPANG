@@ -1,0 +1,170 @@
+<%- include ('layouts/header') -%>
+<%- include ('layouts/sidebar') -%>
+<%- include ('layouts/topbar') -%>
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary edit_id">Data Sampah</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Jenis Sampah</th>
+                            <th>Harga /kg </th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <% data.map(entry => { %>
+                            <td class="jenis-sampah-data"><%= entry.jenis_sampah%></td>
+                            <td class="harga-sampah-data"><%= entry.harga_sampah %></td>
+                            <td class="col-2">
+                                <div class="action-container d-flex justify-content-around">
+                                    <a href="javascript:void()" class="icon edit_item btn btn-warning btn-sm col-5" data-toggle="modal" data-target="#editData"
+                                    data-id="<%= entry.id %>"
+                                    data-jenis="<%- entry.jenis_sampah-%>"
+                                    data-harga="<%- entry.harga_sampah-%>">Edit</a>
+                                    <form class = "d-flex justify-content-center col-5 bg-danger b-2 rounded" action="list_sampah/delete/<%-entry.id-%>?_method=DELETE" method="POST">
+                                        <button class="icon delete_item btn btn-danger btn-sm" data-id="<%= entry.id %>" onclick="return confirm('Apa kamu yakin ingin menghapus data ini?')">Hapus</button>
+                                    </form>
+                                </div>    
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="btn-container d-flex justify-content-end">
+        <button class="btn btn-success w-25 " data-toggle="modal" data-target="#addData">Tambah data Sampah</button>
+    </div>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- modal-tambah-data -->
+<div class="modal fade" id="addData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/list" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Sampah</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="inputJenisSampah" class="form-label">Jenis Sampah</label>
+                        <input type="text" autocomplete="off" class="form-control jenis-sampah" id="inputJenisSampah" placeholder="Jenis Sampah" name="jenis_sampah">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hargaSampah" class=" form-label">Harga Sampah /kg</label>
+                        <input type="text" autocomplete="off" class="form-control harga-sampah" id="hargaSampah" placeholder="Harga /kg" name="harga_sampah">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-tambah btn btn-success">Tambah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- end of modal-tambah-data -->
+
+<!-- modal-edit-data -->
+<div class="modal fade" id="editData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/list_sampah/edit?_method=PUT" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Sampah</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="hidden" name="id" class = "id-modal">
+                        <label for="inputJenisSampah" class="form-label">Jenis Sampah</label>
+                        <input type="text" class="form-control jenis-sampah-edit" id="inputJenisSampah" placeholder="Jenis Sampah" name="jenis_sampah">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hargaSampah" class=" form-label">Harga Sampah /kg</label>
+                        <input type="text" class="form-control harga-sampah-edit" id="hargaSampah" placeholder="Harga /kg" name="harga_sampah">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn-Selesai btn btn-success">Selesai</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- end of modal-edit-data -->
+
+<!-- modal-delete-data -->
+
+<!-- end of modal-delete-data -->
+
+<script>
+// start-of-add-data
+    const tambah = document.querySelector('.btn-tambah');
+    const jenisSampah = document.querySelector('.jenis-sampah');
+    const hargaSampah = document.querySelector('.harga-sampah');
+
+    tambah.addEventListener('click',()=>{
+        if(jenisSampah.value == "" || hargaSampah.value == ""){
+            alert('DATA HARUS DIMASUKKAN !!')
+        }else{
+            alert('Data berhasil ditambahkan!' );
+        }
+    })
+// end-of-add-data
+
+// start-of-edit-data
+    const jenisSampahEdit = document.querySelector('.jenis-sampah-edit').value
+    const hargaSampahEdit = document.querySelector('.harga-sampah-edit');
+    const editItem = document.querySelectorAll('.edit_item');
+
+    editItem.forEach(item =>{
+        const id = item.dataset.id;
+        const jenis_sampah = item.dataset.jenis;
+        const harga_sampah = item.dataset.harga;
+
+        item.addEventListener('click',()=>{
+            document.querySelector('.jenis-sampah-edit').value = jenis_sampah;
+            document.querySelector('.harga-sampah-edit').value = harga_sampah;
+            document.querySelector('.id-modal').value = id;
+        })
+    })
+// end-of-edit-data
+
+// start-of-delete-data
+    const deleteItem = document.querySelectorAll('.delete_item');
+    deleteItem.forEach(item =>{
+        const id = item.dataset.id;
+        item.addEventListener('click',()=>{
+            document.querySelector('.id-modal').value = id;
+            console.log(id)
+        })
+    })
+
+</script>
+<%- include ('layouts/etc') -%>

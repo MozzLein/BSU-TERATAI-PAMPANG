@@ -1,0 +1,100 @@
+<%- include ('layouts/header') -%>
+<%- include ('layouts/sidebar') -%>
+<%- include ('layouts/topbar') -%>
+
+<div class="container col-8">
+
+  <div class="mb-3">
+    <table class="table">
+        <form action="/input" method="post">
+        <tr>
+          <td class="w-50"><label for="exampleFormControlInput1" class="form-label">Penyetor</label></td>
+          <td><input type="text" class="form-control  mb-3" autocomplete="off" id="Penyetor" placeholder="Nama Penyetor" name="Penyetor"></td>
+        </tr> 
+        <tr>
+          <td><label for="dropdown">Jenis Sampah</label></td>
+          <td class="d-flex align-items-center ">
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Jenis Sampah
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <% data.map(entry => { %>
+                  <a class="dropdown-item" 
+                  data-harga="<%-entry.harga_sampah-%>" 
+                  onclick="forDropdown('<%-entry.harga_sampah-%>', '<%-entry.jenis_sampah-%>')">
+                  <%-entry.jenis_sampah-%>
+                </a>
+                  <% }) %>
+              </div>
+            </div>
+            <div class="item-selected ml-3"></div>
+            <input type="hidden" class = "jenis-sampah" name="jenis_sampah"></input> 
+            <input type="hidden" class ="harga-sampah text-secondary pl-3" name="harga_sampah"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="exampleFormControlInput1" class="form-label">Input Berat Sampah</label>
+          </td>
+          <td>
+            <input type="text" class="form-control  berat_sampah mb-3" autocomplete="off" id="exampleFormControlInput1" name="berat_sampah" placeholder="berat.kg">
+          </td>
+          <td>
+            <input type="button" class="check-button btn btn-secondary mb-3" value="Periksa">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="exampleFormControlInput1" class="form-label">Total Harga</label>
+          </td>
+          <td class="total-harga" name="total-harga"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <button type="submit" class="btn btn-success finish-button  mb-3">Selesai</button>
+          </td>
+        </tr>
+      </form>
+      </table>
+    </div>
+  </div>
+  <script>
+    const periksa = document.querySelector('.check-button');
+    const selesai = document.querySelector('.finish-button');
+    const penyetor = document.querySelector('#Penyetor')
+    const berat = document.querySelector('.berat_sampah');
+    const total = document.querySelector('.total-harga');
+
+
+function containsOnlyNumbers(str) {
+  return /^\d+$/.test(str);
+}
+function forDropdown(harga, jenis) {  
+  document.querySelector('.item-selected').innerText = jenis;
+  document.querySelector('.jenis-sampah').value = jenis;
+    periksa.addEventListener('click',()=>{
+      let hasil = harga * berat.value
+      console.log(hasil);
+        if(containsOnlyNumbers(`${berat.value}`)){
+            total.innerHTML = `<span>Rp. ${hasil}</span>`;
+        }else{
+          total.innerHTML = '<p class="text-danger">BERAT HARUS ANGKA!!</p>'
+        }
+        return hasil;
+    })
+
+    selesai.addEventListener('click',()=>{
+      let hasil = harga * berat.value
+      document.querySelector('.harga-sampah').value =  hasil;
+      if(berat.value == "" || penyetor.value==""){
+          alert('DATA HARUS DIMASUKKAN !!')
+      }else{
+          alert('Data berhasil ditambahkan!');
+      }
+    })
+}
+</script> 
+
+<%- include ('layouts/etc') -%>

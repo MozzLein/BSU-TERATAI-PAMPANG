@@ -1,0 +1,50 @@
+<%- include ('layouts/header') -%>
+<%- include ('layouts/sidebar') -%>
+<%- include ('layouts/topbar') -%>
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Data Penginputan</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAMA PENYETOR</th>
+                            <th>JENIS SAMPAH</th>
+                            <th>BERAT SAMPAH</th>
+                            <th>HARGA SAMPAH</th>
+                            <th>TANGGAL INPUT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <% data.forEach(entry=> { %>
+                            <td><%=entry.id%></td>
+                            <td><%=entry.nama_penyetor%></td>
+                            <td><%=entry.jenis_sampah%></td>
+                            <td><%=entry.berat_sampah%></td>
+                            <td><%=entry.harga%></td>
+                            <td><%=entry.tanggal_input%></td>
+                        </tr>
+                        <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<%- include ('layouts/footer') -%>
+<%- include ('layouts/etc') -%>
